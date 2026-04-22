@@ -11,57 +11,46 @@ def entradaNumero(a):
             a = float(a)
             break
         except ValueError:
-            print("Por favor ingrese un número válido.")
-            print("")
+            print("Por favor ingrese un número válido.\n")
     return a
     
 def salidaNumeros(res):
     if res >= 0:
-        print(f"La respuesta es: {res:.2f}") #.2f es igual que en C
+        print(f"La respuesta es: {res:.2f}\n\n") #.2f es igual que en C
         time.sleep(2.5) # el parámetro son segundos
-        print("")
-        print("")
     else:
-        print("ERROR.")
-        print("Resultado negativo.")
+        print("ERROR.\nResultado negativo.\n")
         time.sleep(2.5)
 
 n1=0
 n2=0
 
 while True:
-    print("-- Calculadora --")
-    print("1. Suma")
-    print("2. Resta")
-    print("3. Multiplicación")
-    print("4. División")
-    print("")
-    print("5. Salir")
-    print("")
+    print("-- Calculadora --\n1. Suma\n2. Resta\n3. Multiplicación\n4. División\n\n5. Salir\n")
     menu_opcion= int(input("Ingrese la operación a realizar: "))
     
-    if menu_opcion == 1:
-        n1 = entradaNumero(n1)
-        n2= entradaNumero(n2)
-        res= n1+n2
-        salidaNumeros(res)
-    elif menu_opcion == 2:
-        n1 = entradaNumero(n1)
-        n2= entradaNumero(n2)
-        res= n1-n2
-        salidaNumeros(res)
-    elif menu_opcion == 3:
-        n1 = entradaNumero(n1)
-        n2= entradaNumero(n2)
-        res= n1*n2
-        salidaNumeros(res)
-    elif menu_opcion == 4:
-        n1 = entradaNumero(n1)
-        n2= entradaNumero(n2)
-        res= n1/n2
-        salidaNumeros(res)
-    elif menu_opcion == 5:
-        break
-    else:
-        print("ERROR.")
-        print("Ingrese una opción válida.")
+    match menu_opcion:
+        case 1:
+            n1 = entradaNumero(n1)
+            n2= entradaNumero(n2)
+            res= n1+n2
+            salidaNumeros(res)
+        case 2:
+            n1 = entradaNumero(n1)
+            n2= entradaNumero(n2)
+            res= n1-n2
+            salidaNumeros(res)
+        case 3:
+            n1 = entradaNumero(n1)
+            n2= entradaNumero(n2)
+            res= n1*n2
+            salidaNumeros(res)
+        case 4:
+            n1 = entradaNumero(n1)
+            n2= entradaNumero(n2)
+            res= n1/n2
+            salidaNumeros(res)
+        case 5:
+            break
+        case _:
+            print("ERROR.\nIngrese una opción válida.\n\n")
