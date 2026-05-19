@@ -3,7 +3,7 @@ import os
 import sys
 
 import funcionesMenu
-from datos import biblioteca, generos
+from datos import *
 
 """"
 NO VA CON LA CONSIGNA PERO LO DEJO POR SI QUIERO AGREGARLO DESPUES
@@ -15,7 +15,7 @@ def agregar_genero(genero_a_agregar_en_lista):
     # RECORDAR DESCOMENTAR LA FUNCIÓN EN procesar_agregar_elemento Y CAMBIAR generos A LISTA SI SE USA LA FUNCIÓN.
 """
 def mensaje_volviendo_al_menu():
-    print("\nVolviendo al menú principal...")
+    print(f"{NEGRITA}Volviendo al menú principal...{RESET}")
     time.sleep(2.5)
 
 def limpiar_pantalla():

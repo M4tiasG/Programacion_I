@@ -1,12 +1,11 @@
 from procesos import *
-from datos import biblioteca, generos
+from datos import *
 
 
 def agregar_elemento():
     # Imprime el menú completo para más comodidad del usuario.
-    limpiar_pantalla()
     print("="*37)
-    print("AGREGAR ELEMENTO A LA BIBLIOTECA")
+    print(f"{NEGRITA}AGREGAR ELEMENTO A LA BIBLIOTECA{RESET}")
     print("="*37)
     print("Ingrese el título del juego: ")
     print("Ingrese los géneros del juego (separados por comas): ")
@@ -52,124 +51,192 @@ def agregar_elemento():
 
         if procesar_agregar_elemento(titulo, genero, año, puntaje):
             limpiar_pantalla()
-            print("Elemento agregado correctamente.")
+            print(f"{VERDE}Elemento agregado correctamente.{RESET}")
             mensaje_volviendo_al_menu()
         else:
             limpiar_pantalla()
             print("Hubo un error y no se pudo agregar el elemento a la biblioteca.")
             mensaje_volviendo_al_menu()
-    except ValueError:
+    except ValueError as error:
         limpiar_pantalla()
-        print("Error: Se ingresaron valores no válidos.")
+        print(f"Error: Se ingresaron valores no válidos. {error}")
         mensaje_volviendo_al_menu()
     except AssertionError as error:
         limpiar_pantalla()
-        print(f"Error: {error}")
+        print(f"{ROJO}{NEGRITA}Error:{RESET} {error}")
         mensaje_volviendo_al_menu()
+        return
 
 def listar_todos_los_elementos():
-    biblioteca_ordenada= procesar_ordenar_por_puntaje(biblioteca)
-    print("="*37)
-    print("LISTA DE VIDEOJUEGOS EN LA BIBLIOTECA")
-    print("="*37)
-    mostrar_lista(biblioteca_ordenada)
-    print("\nPresione Cualquier tecla para volver al menú principal.")
-    getch()
+    try:
+        assert len(biblioteca) > 0, "La biblioteca está vacía."
+        
+        biblioteca_ordenada= procesar_ordenar_por_puntaje(biblioteca)
+        print("="*37)
+        print(f"{NEGRITA}LISTA DE VIDEOJUEGOS EN LA BIBLIOTECA{RESET}")
+        print("="*37)
+        mostrar_lista(biblioteca_ordenada)
+        print("\nPresione Cualquier tecla para volver al menú principal.")
+        getch()
+    except AssertionError as error:
+        limpiar_pantalla()
+        print(f"{ROJO}{NEGRITA}Error:{RESET} {error}")
+        mensaje_volviendo_al_menu()
+        return
+
 
 def buscarPorTitulo():
+    print("="*37)
+    print(f"{NEGRITA}BUSCAR POR TITULO{RESET}")
+    print("="*37)
+    print("--Nota: el titulo puede estar parcialmente completo--")
+    print("Ingrese el título del juego a buscar: ", end="")
     try:
-        titulo_buscado = input("Ingrese el título del juego a buscar: ").strip()
-        
-        if not titulo_buscado:
-            print("Error: El título no puede estar vacío.")
-            mensaje_volviendo_al_menu()
-            return
+        titulo_buscado = input().strip()
+        assert titulo_buscado != "", "El título no puede estar vacío."
 
         valores_encontrados = procesar_encontrar_elementos("Titulo", titulo_buscado) #Encontrar elementos
-        valores_encontrados = procesar_ordenar_por_puntaje(valores_encontrados) # Ordenar por puntaje
         
-        if valores_encontrados != None:
+        
+        if valores_encontrados is not None:
+            valores_encontrados = procesar_ordenar_por_puntaje(valores_encontrados) # Ordenar por puntaje
+            
+            limpiar_pantalla()
+            print(f"== {NEGRITA}VIDEOJUEGOS COINCIDENTES CON '{titulo_buscado}'{RESET} ==")
             mostrar_lista(valores_encontrados)
+            print("\nPresione Cualquier tecla para volver al menú principal.")
+            getch()
         else:
-            print("ERROR: No se encontró ningún videojuego con el título ingresado.")
+            limpiar_pantalla()
+            print("No se encontró ningún videojuego con el título ingresado.")
             mensaje_volviendo_al_menu()
             return
-    except ValueError as error:
-        print(f"ERROR: Ingrese un valor correcto.\nError: {error}")
+    except AssertionError as error:
+        limpiar_pantalla()
+        print(f"{ROJO}{NEGRITA}Error:{RESET} {error}")
         mensaje_volviendo_al_menu()
+        return
 
 
 def filtrarPorGenero():
+    print("="*37)
+    print(f"{NEGRITA}FILTRAR POR GENERO{RESET}")
+    print("="*37)
     print("Géneros disponibles: " + ", ".join(generos)) # join para mostrar los strings sin forma de tupla
+    print("Ingrese el género a buscar: ", end="")
     
-    genero_buscado = input("Ingrese los géneros a buscar (separados por comas): ").strip()
-    if not genero_buscado:
-        print("Error: El género no puede estar vacío.")
+    try:
+        genero_buscado = input().strip()
+        assert genero_buscado != "", "El género no puede estar vacío."
+        
+        valores_encontrados = procesar_encontrar_elementos("Genero", genero_buscado) #Encontrar elementos
+        
+        if valores_encontrados is not None:
+            valores_encontrados = procesar_ordenar_por_puntaje(valores_encontrados)
+            limpiar_pantalla()
+            print(f"=={NEGRITA} VIDEOJUEGOS COINCIDENTES CON EL GENERO '{genero_buscado}'{RESET} ==")
+            mostrar_lista(valores_encontrados)
+            print("\nPresione Cualquier tecla para volver al menú principal.")
+            getch()
+        else:
+            print(f"No se encontró ningún videojuego con el género '{genero_buscado}'.")
+            mensaje_volviendo_al_menu()
+            return
+    except AssertionError as error:
+        limpiar_pantalla()
+        print(f"{ROJO}{NEGRITA}Error:{RESET} {error}")
         mensaje_volviendo_al_menu()
         return
-    
-    valores_encontrados = procesar_encontrar_elementos("Genero", genero_buscado) #Encontrar elementos
-    
-    if valores_encontrados != None:
-        mostrar_lista(valores_encontrados)
-    else:
-        print("ERROR: No se encontró ningún videojuego con el Género ingresado.")
-        mensaje_volviendo_al_menu()
 
 
 def filtrarPorAño():
+    print("="*37)
+    print(f"{NEGRITA}FILTRAR POR AÑO{RESET}")
+    print("="*37)
+    print("Ingrese el año del juego año a buscar: ", end="")
     try:
-        anio_buscado = int(input("Ingrese el año del juego a buscar: "))
-    except ValueError:
-        print("Error: Por favor, ingrese un valor numérico para el año.")
-        return
+        anio_buscado = int(input())
+        assert anio_buscado != None, "El año no puede estar vacío."
+        assert isinstance(anio_buscado, int), "El año debe ser un número entero."
+        assert anio_buscado > 0, "El año debe ser un número positivo."
+        
+        valores_encontrados = procesar_encontrar_elementos("Año", anio_buscado) #Encontrar elementos
 
-    if not anio_buscado:
-        print("Error: El año no puede estar vacío.")
+        if valores_encontrados is not None:
+            valores_encontrados = procesar_ordenar_por_puntaje(valores_encontrados)
+            limpiar_pantalla()
+            print(f"== {NEGRITA}VIDEOJUEGOS DEL AÑO {anio_buscado}{RESET} ==")
+            mostrar_lista(valores_encontrados)
+            print("\nPresione Cualquier tecla para volver al menú principal.")
+            getch()
+        else:
+            limpiar_pantalla()
+            print(f"No se encontró ningún videojuego del año {anio_buscado}.")
+            mensaje_volviendo_al_menu()
+    except ValueError as error:
+        print(f"Error: Por favor, ingrese un valor numérico para el año. {error}")
         mensaje_volviendo_al_menu()
         return
-
-    valores_encontrados = procesar_encontrar_elementos("Año", anio_buscado) #Encontrar elementos
-
-    if valores_encontrados != None:
-        mostrar_lista(valores_encontrados)
-    else:
-        print("ERROR: No se encontró ningún videojuego con el año ingresado.")
+    except AssertionError as error:
+        limpiar_pantalla()
+        print(f"{ROJO}{NEGRITA}Error:{RESET} {error}")
         mensaje_volviendo_al_menu()
+        return
+    
 
 def mostrar_recomendacion_aleatoria():
     print("="*37)
-    print("MOSTRAR RECOMENDACIÓN ALEATORIA")
+    print(f"{NEGRITA}RECOMENDACION ALEATIORIA{RESET}")
     print("="*37)
     mostrar_recomendacuion_aleatoria()
+    print("\nPresione Cualquier tecla para volver al menú principal.")
+    getch()
 
 def eliminar_elemento():
     print("="*37)
-    print("ELIMINAR ELEMENTO")
+    print(f"{NEGRITA}ELIMINAR ELEMENTO{RESET}")
     print("="*37)
     try:
         id_a_eliminar = int(input("Ingrese el ID del juego a eliminar: "))
-    except ValueError:
-        print("Error: Por favor, ingrese un valor numérico para el ID.")
+        assert id_a_eliminar != None, "El ID no puede estar vacío."
+        assert isinstance(id_a_eliminar, int), "El ID debe ser un número entero."
+        assert id_a_eliminar > 0, "El ID debe ser un número positivo."
+        
+        
+        
+    except ValueError as error:
+        limpiar_pantalla()
+        print(f"Error: Por favor, ingrese un valor numérico para el ID. {error}")
+        mensaje_volviendo_al_menu()
         return
-    if not id_a_eliminar:
-        print("Error: El ID no puede estar vacío.")
+    except AssertionError as error:
+        limpiar_pantalla()
+        print(f"{ROJO}{NEGRITA}Error:{RESET} {error}")
+        mensaje_volviendo_al_menu()
         return
     
     # Confirmación antes de eliminar
+    limpiar_pantalla()
     print("="*37)
-    print("ADVERTENCIA")
+    print(f"{NEGRITA}{AMARILLO}ADVERTENCIA{RESET}")
     print("="*37)
-    print("Está seguro que desea eliminar el elemento con ID " + str(id_a_eliminar) + "?\n Esta acción no se puede deshacer. (s/n)")
+    print("Está seguro que desea eliminar el elemento con ID " + str(id_a_eliminar) + f"?\n{ROJO}{NEGRITA}Esta acción no se puede deshacer.{RESET} \n(s/n) >> ", end="")
+    
     confirmacion = input().strip().lower()
     if confirmacion != "s":
-        print("Eliminación cancelada. Volviendo al menú principal.")
-        time.sleep(2.5)
+        limpiar_pantalla()
+        print("Eliminación cancelada por el usuario.")
+        mensaje_volviendo_al_menu()
         return
 
     # Proceso de eliminación
     if procesar_eliminar_elemento(id_a_eliminar):
-        print(f"Elemento con ID {id_a_eliminar} eliminado correctamente. Volviendo al menú principal.")
-        time.sleep(2.5)
+        limpiar_pantalla()
+        print(f"{VERDE}Elemento con ID {id_a_eliminar} eliminado correctamente.{RESET}")
+        mensaje_volviendo_al_menu()
+        return
     else:
+        limpiar_pantalla()
         print(f"No se encontró ningún elemento con ID {id_a_eliminar}.")
+        mensaje_volviendo_al_menu()
+        return

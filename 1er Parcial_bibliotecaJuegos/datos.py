@@ -2,7 +2,6 @@
 ROJO = '\033[91m'
 VERDE = '\033[92m'
 AMARILLO = '\033[93m'
-AZUL = '\033[94m'
 NEGRITA = '\033[1m'
 RESET = '\033[00m'
 
