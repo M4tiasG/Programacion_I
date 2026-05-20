@@ -3,7 +3,6 @@ from datos import *
 
 
 def agregar_elemento():
-    # Imprime el menú completo para más comodidad del usuario.
     print("="*37)
     print(f"{NEGRITA}AGREGAR ELEMENTO A LA BIBLIOTECA{RESET}")
     print("="*37)
@@ -29,9 +28,9 @@ def agregar_elemento():
         if genero is None:
             limpiar_pantalla()
             if generos_invalidos:
-                print(f"Error: El/Los género(s) '{', '.join(generos_invalidos)}' no se encuentra(n) en la lista de géneros disponibles.")
+                print(f"{ROJO}{NEGRITA}Error:{RESET} El/Los género(s) {ROJO}{NEGRITA}'{', '.join(generos_invalidos)}'{RESET} no se encuentra(n) en la lista de géneros disponibles.")
             else:
-                print("Error: Debe ingresar al menos un género válido.")
+                print(f"{ROJO}{NEGRITA}Error:{RESET} Debe ingresar al menos un género válido.")
             mensaje_volviendo_al_menu()
             return
 
@@ -59,7 +58,7 @@ def agregar_elemento():
             mensaje_volviendo_al_menu()
     except ValueError as error:
         limpiar_pantalla()
-        print(f"Error: Se ingresaron valores no válidos. {error}")
+        print(f"{ROJO}{NEGRITA}Error:{RESET} Se ingresaron valores no válidos. {error}")
         mensaje_volviendo_al_menu()
     except AssertionError as error:
         limpiar_pantalla()
@@ -186,7 +185,7 @@ def filtrarPorAño():
 
 def mostrar_recomendacion_aleatoria():
     print("="*37)
-    print(f"{NEGRITA}RECOMENDACION ALEATIORIA{RESET}")
+    print(f"{NEGRITA}RECOMENDACION ALEATORIA{RESET}")
     print("="*37)
     mostrar_recomendacuion_aleatoria()
     print("\nPresione Cualquier tecla para volver al menú principal.")

@@ -15,10 +15,12 @@ def agregar_genero(genero_a_agregar_en_lista):
     # RECORDAR DESCOMENTAR LA FUNCIÓN EN procesar_agregar_elemento Y CAMBIAR generos A LISTA SI SE USA LA FUNCIÓN.
 """
 def mensaje_volviendo_al_menu():
+    """Muestra un mensaje indicando que se volverá al menú principal y espera unos segundos antes de continuar."""
     print(f"{NEGRITA}Volviendo al menú principal...{RESET}")
     time.sleep(2.5)
 
 def limpiar_pantalla():
+    """Limpia la pantalla de la terminal de manera compatible con Windows, Linux y macOS."""
     #Windows
     if os.name == 'nt': 
         os.system('cls')
@@ -28,7 +30,10 @@ def limpiar_pantalla():
 
 
 def getch():
-    """Lee una sola tecla del teclado sin esperar a que se presione Enter."""
+    """Lee una sola tecla del teclado sin esperar a que se presione Enter.
+    Returns:
+        str: La tecla presionada por el usuario.
+    """
     # Windows
     if os.name == 'nt':
         import msvcrt
@@ -63,6 +68,15 @@ def procesar_ordenar_por_puntaje(biblioteca_a_ordenar):
 
 
 def procesar_agregar_elemento(titulo_a_agregar, genero_a_agregar, año_a_agregar, puntaje_a_agregar):
+    """Función para agregar un nuevo elemento a la biblioteca.
+    Args:
+        titulo_a_agregar (str): El título del nuevo elemento.
+        genero_a_agregar (str): El género del nuevo elemento.
+        año_a_agregar (int): El año de lanzamiento del nuevo elemento.
+        puntaje_a_agregar (float): El puntaje del nuevo elemento.
+    Returns:
+        bool: True si el elemento fue agregado correctamente, False en caso contrario.
+    """
     longitud_original = len(biblioteca)
     
     try:
@@ -90,7 +104,6 @@ def validar_generos_ingresados(genero_ingresado):
     """Valida géneros ingresados por el usuario.
     Args:
         genero_ingresado (str): Cadena con géneros separados por comas.
-
     Returns:
         tuple: (genero_normalizado, generos_invalidos)
             genero_normalizado (str|None): Géneros válidos formateados.
@@ -136,6 +149,10 @@ def procesar_encontrar_elementos(clave_a_buscar, valor_buscado):
         return None
     
 def mostrar_lista(valores_a_mostrar):
+    """Función para mostrar una lista de elementos de la biblioteca en un formato legible.
+    Args:
+        valores_a_mostrar (list): Una lista de elementos que se desea mostrar.
+    """
     try:
         print("="*100)
         for elemento in valores_a_mostrar:
@@ -145,10 +162,11 @@ def mostrar_lista(valores_a_mostrar):
         print(f"Error al mostrar la lista. \n{error}")
         
 def mostrar_recomendacuion_aleatoria():
+    """Función para mostrar una recomendación aleatoria de la biblioteca. Si la biblioteca está vacía, muestra un mensaje de error."""
     import random
     if biblioteca:
         recomendacion = random.choice(biblioteca)
-        mostrar_lista([recomendacion]) # Mostrar la recomendación como una lista de un solo elemento
+        mostrar_lista([recomendacion]) # Lo pasa como una lista de un solo elemento para reutilizar la función mostrar_lista
     else:
         print("ERROR: La biblioteca está vacía. No se pueden mostrar recomendaciones.")
         
