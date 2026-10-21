@@ -1,0 +1,1 @@
+ALLOWED_VEHICLES=("auto", "moto", "camioneta")
