@@ -1,13 +1,17 @@
 import os
+import csv
 
-def find_path_ticket_folder():
-    folder_name="Tickets"
+TICKETS_EXPORTATION_FOLDER_NAME= "Tickets"
+MOVEMENTS_EXPORTATION_FOLDER_NAME= "Movimientos Procesados"
+
+
+def find_path_folder(folder_name_to_find):
     current_directory = os.path.dirname(os.path.abspath(__file__))
-    folder_path= os.path.join(current_directory, folder_name)
+    folder_path= os.path.join(current_directory, folder_name_to_find)
     os.makedirs(folder_path, exist_ok=True)
     return folder_path
 
-
+## TICKETS ##
 def create_ticket_index(ticket_folder_path):
     tickets_folder=os.listdir(ticket_folder_path)
     current_indexes=0
@@ -20,7 +24,7 @@ def create_ticket_index(ticket_folder_path):
 
 
 def create_ticket(plate, vehicle_type, days, entrance_time, exit_time, wash_service, subtotal):
-    ticket_folder_path= find_path_ticket_folder()
+    ticket_folder_path= find_path_folder(TICKETS_EXPORTATION_FOLDER_NAME)
     ticket_index=create_ticket_index(ticket_folder_path)
     ticket_name=f"TKT-{ticket_index}.txt"
     
@@ -37,3 +41,19 @@ def create_ticket(plate, vehicle_type, days, entrance_time, exit_time, wash_serv
             file.write(f"Dias estacionados: {days}\n")
         file.write(f"Servicio de lavado: {wash_service}\n")
         file.write(f"Subtotal: {subtotal}\n")
+
+
+## HISTORY MOVEMENTS ##
+
+def create_csv(dictionary_list, file_name):
+    if not dictionary_list: return
+    csv_folder_path=find_path_folder(MOVEMENTS_EXPORTATION_FOLDER_NAME)
+    csv_exported_file= os.path.join(csv_folder_path, file_name)
+
+    columns=dictionary_list[0].keys()
+    with open(csv_exported_file, "w", newline="", encoding="utf-8") as file:
+        file_writer=csv.DictWriter(file, fieldnames=columns)
+        file_writer.writeheader()
+        file_writer.writerows(dictionary_list)
+    
+    

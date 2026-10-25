@@ -1,6 +1,7 @@
 from validations import *
 from importation import extract_fees_prices
 from exportation import create_ticket
+from process_movements import process_history_movements
 
 import customtkinter as ctk
 from CTkMessagebox import CTkMessagebox 
@@ -12,7 +13,26 @@ def show_checkout_window():
 def show_main_menu_window():
     frame_checkout.pack_forget()
     frame_main_menu.pack(fill="both", expand=True)
-
+    
+def action_btn_process_movements():
+    try:
+        assert process_history_movements, "Ocurrió un error al exportar los movimientos"
+        correct_msg_box= CTkMessagebox(
+                                title=f"Información - Procesar lote de movimientos",
+                                message="Se procesaron los lotes de movimiento a CSV's",
+                                icon= "check",
+                            )
+    except AssertionError as error:
+            assertion_error_msg_box= CTkMessagebox(
+                        title=f"Error en los datos",
+                        message=f"ERROR: {error}. Verifique los datos y vuelva a intentarlo.",
+                        icon= "cancel",
+                    )
+            # Console debug
+            print(f"ERROR: {error}")
+            return
+        
+        
 def close_program():
     window.destroy()
 
@@ -96,14 +116,28 @@ if __name__== "__main__":
 
     frame_main_menu=ctk.CTkFrame(window)
     frame_checkout=ctk.CTkFrame(window)
+    # frame_process_movements=ctk.CTkFrame(window)
 
     ### MENU PRINCIPAL ### 
     
     main_menu_title_label = ctk.CTkLabel(frame_main_menu, text="Sistema AutoPark", font=("Arial", 24, "bold"))
     main_menu_title_label.pack(pady=40)
     
-    btn_checkout= ctk.CTkButton(frame_main_menu, text="Cobro en Ventanilla", command=show_checkout_window)
+    btn_checkout= ctk.CTkButton(frame_main_menu,
+        text="Cobro en Ventanilla", 
+        command=show_checkout_window)
     btn_checkout.pack(pady=10)
+    
+    btn_process_movements=ctk.CTkButton(frame_main_menu,
+        text="Procesar lote de movimientos", 
+        command=action_btn_process_movements)
+    btn_process_movements.pack(pady=10)
+    
+    btn_cerrar = ctk.CTkButton(
+        frame_main_menu, 
+        text="Cerrar", 
+        command= close_program)
+    btn_cerrar.pack(pady=40)
     
     
     ### COBRO VENTANILLA ###
@@ -175,12 +209,6 @@ if __name__== "__main__":
         height=40,
         command=process_chekout)
     btn_finish.pack(pady=10)
-
-    btn_cerrar = ctk.CTkButton(
-        frame_main_menu, 
-        text="Cerrar", 
-        command= close_program)
-    btn_cerrar.pack(pady=40)
 
     frame_main_menu.pack(fill="both", expand=True)
     window.mainloop()
