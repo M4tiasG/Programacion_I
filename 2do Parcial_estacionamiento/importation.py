@@ -1,6 +1,9 @@
 import json
 import os
 
+FEES_CONFIGURATION_JSON= "tarifas.json"
+PARKING_HISTORY_JSON="movimientos.json"
+
 def find_path(file_to_search):
     base_directory= os.path.dirname(os.path.abspath(__file__))
     json_path=os.path.join(base_directory, file_to_search)
@@ -29,3 +32,9 @@ def flatten_json_dictionary(array_to_process):
         else:
             flatten_parking_history.append(item)
     return flatten_parking_history
+
+def extract_fees_prices():
+    fees_configuration_json_path=find_path(FEES_CONFIGURATION_JSON)
+    fee_structure=import_json_configuration(fees_configuration_json_path)
+    fees_prices=fee_structure.get("tarifas", {})
+    return fees_prices

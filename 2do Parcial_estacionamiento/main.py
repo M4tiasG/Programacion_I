@@ -2,22 +2,18 @@ from validations import *
 from calculations import *
 from importation import *
 
-FEES_CONFIGURATION_JSON= "tarifas.json"
-PARKING_HISTORY_JSON="movimientos.json"
 
 if __name__ == "__main__":
     
-    fees_configuration_json_path=find_path(FEES_CONFIGURATION_JSON)
+    fees_prices= extract_fees_prices()
+    
     parking_history_json_path=find_path(PARKING_HISTORY_JSON)
     
-    fee_structure=import_json_configuration(fees_configuration_json_path)
     parking_history_structure=import_json_configuration(parking_history_json_path)
     
     parking_history_movements=parking_history_structure.get("movimientos", [])
-    fees_prices=fee_structure.get("tarifas", {})
     
     flatten_parking_history_movements=flatten_json_dictionary(parking_history_movements)
-    flatten_fees_prices=flatten_json_dictionary(fees_prices)
     
     valid_parking_movements=[]
     invalid_valid_parking_movements=[]
@@ -29,8 +25,8 @@ if __name__ == "__main__":
         exit_time_raw=movement.get("salida")
         wash_service_raw=movement.get("solicito_lavado")
 
-        cleand_plate= validate_vehicle_plate(plate_raw)
-        if not cleand_plate:
+        clean_plate= validate_vehicle_plate(plate_raw)
+        if not clean_plate:
             movement["motivo_rechazo"]= "Patente invalida"
             invalid_valid_parking_movements.append(movement)
             continue
@@ -58,6 +54,7 @@ if __name__ == "__main__":
         total_fee=calculate_total_fee(total_time, 0, clean_vehicle_type, wash_service_raw, fees_prices)
         movement["total_cobrado"]= total_fee
         valid_parking_movements.append(movement)
+
 
     print("validos: ", len(valid_parking_movements))
     print("invalidos: ", len(invalid_valid_parking_movements))
