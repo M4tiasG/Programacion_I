@@ -1,0 +1,8 @@
+==============================
+       AUTOPARK TICKET        
+==============================
+Patente: AA123AA
+Vehiculo: auto
+Dias estacionados: 5
+Servicio de lavado: False
+Subtotal: 80000
