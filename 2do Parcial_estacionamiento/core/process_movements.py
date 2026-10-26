@@ -6,6 +6,7 @@ from core.exportation import create_csv
 # ver forma de instalar customtkinter y CTkMessagebox al iniciar el programa
 
 def process_history_movements():
+    from datetime import datetime
     
     fees_prices= extract_fees_prices()
     
@@ -58,6 +59,6 @@ def process_history_movements():
         movement["tipo_vehiculo"]=clean_vehicle_type
         valid_parking_movements.append(movement)
         
-    create_csv(valid_parking_movements, "liquidacion.csv")
-    create_csv(invalid_parking_movements, "rechazados.csv")
+    create_csv(valid_parking_movements, "liquidacion.csv", "w")
+    create_csv(invalid_parking_movements, "rechazados.csv", "w")
     return True

@@ -44,8 +44,6 @@ def buil_days_section():
             width=200,
             state="disabled"
         )
-    app.days_subtitle_label.pack(pady=1)
-    app.days_entry_text_box.pack(pady=5)
 
 
 def buil_entrance_hour_section():
@@ -96,9 +94,11 @@ def build_views():
 
     btn_cerrar = ctk.CTkButton(
         app.frame_main_menu, 
-        text="Cerrar", 
+        text="Cerrar",
+        fg_color="#E7180B",
+        hover_color="#9F0712",
         command= close_program)
-    btn_cerrar.pack(pady=40)
+    btn_cerrar.pack(pady=10)
 
 
     # --- COBRO EN VENTANILLA ---
