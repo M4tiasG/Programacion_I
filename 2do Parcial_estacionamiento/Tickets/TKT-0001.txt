@@ -1,8 +1,0 @@
-==============================
-       AUTOPARK TICKET        
-==============================
-Patente: BB456CC
-Vehiculo: auto
-Horario: 12:00 - 22:00
-Servicio de lavado: False
-Subtotal: 12400

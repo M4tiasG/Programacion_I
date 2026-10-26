@@ -1,14 +1,15 @@
 import json
 import os
 
-FEES_CONFIGURATION_JSON= "tarifas.json"
-PARKING_HISTORY_JSON="movimientos.json"
+FEES_CONFIGURATION_JSON= "data/tarifas.json"
+PARKING_HISTORY_JSON="data/movimientos.json"
 
 def find_path(file_to_search):
-    base_directory= os.path.dirname(os.path.abspath(__file__))
-    json_path=os.path.join(base_directory, file_to_search)
+    core_directory = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.dirname(core_directory)
+    json_path = os.path.join(project_root, file_to_search)
     if not json_path:
-        print(f"ERROR configurate_path: No se pudo encontrar el archivo {file_to_search}")
+        print(f"ERROR: No se pudo encontrar el archivo {file_to_search}")
     return json_path
 
 def import_json_configuration(json_config_path):

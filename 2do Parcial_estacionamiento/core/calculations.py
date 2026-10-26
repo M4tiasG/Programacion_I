@@ -35,3 +35,5 @@ def calculate_total_fee(total_minutes, days, vehicle_type, wash_service, fees_to
                 return fees_to_charge[vehicle_type]["precio_lavado"] + (days * fees_to_charge[vehicle_type]["tope_dia"])
             else:
                 return days * fees_to_charge[vehicle_type]["tope_dia"]
+
+ 

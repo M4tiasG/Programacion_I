@@ -1,4 +1,4 @@
-from calculations import *
+from core.calculations import *
 import re
 
 ALLOWED_VEHICLES=("auto", "moto", "camioneta")

@@ -1,8 +1,0 @@
-==============================
-       AUTOPARK TICKET        
-==============================
-Patente: JOF001
-Vehiculo: auto
-Horario: 08:00 - 22:00
-Servicio de lavado: True
-Subtotal: 19800

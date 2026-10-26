@@ -1,8 +1,0 @@
-==============================
-       AUTOPARK TICKET        
-==============================
-Patente: BCD456
-Vehiculo: auto
-Horario: 12:00 - 22:00
-Servicio de lavado: True
-Subtotal: 15000

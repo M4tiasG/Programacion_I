@@ -1,7 +1,7 @@
-from validations import *
-from calculations import *
-from importation import *
-from exportation import create_csv
+from core.validations import *
+from core.calculations import *
+from core.importation import *
+from core.exportation import create_csv
 
 # ver forma de instalar customtkinter y CTkMessagebox al iniciar el programa
 
@@ -61,5 +61,3 @@ def process_history_movements():
     create_csv(valid_parking_movements, "liquidacion.csv")
     create_csv(invalid_parking_movements, "rechazados.csv")
     return True
-
-process_history_movements()
